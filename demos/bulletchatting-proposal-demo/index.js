@@ -1,12 +1,30 @@
 const list = document.querySelector('bullet-chatting-list');
 const video = document.querySelector('video');
-list.bulletchattingplaystate = 'paused';
+console.log('Initial setup - List element:', list);
+console.log('Initial setup - Video element:', video);
+
+list.bulletchattingplaystate = 'running';
 list.area = 40;
 list.bulletchattingduration = 6000;
-const texts = ['This alpaca is so cute 😋', 'Perfect in workmanship 🥳', 'High-energy alarm 😱', 'What\'s this alpaca\'s name?', 'Short legs', 'Is alpaca delicious?', 'The alpaca is eating grass', 'LOOOOOL', 'Has anyone noticed his eyes?', 'I love his smile', 'He find the treasure', 'Does alpaca like to eat berries? 🍇'];
+
+// Add click handler to the button directly
+document.querySelector('button').addEventListener('click', function () {
+    console.log('Button clicked!');
+    const text = document.querySelector('.bulletchatting-text').value;
+    const mode = document.querySelector('.bulletchatting-mode').value;
+    const fontSize = document.querySelector('.bulletchatting-fontsize').value;
+    const duration = document.querySelector('.bulletchatting-duration').value;
+    const delay = document.querySelector('.bulletchatting-delay').value;
+
+    console.log('Attempting to add bullet chat with:', { text, mode, fontSize, duration, delay });
+    window.addbulletchatting(text, mode, fontSize, duration, delay);
+});
 
 window.addbulletchatting = (text, mode, fontSize, duration, delay) => {
+    console.log('addbulletchatting called with:', { text, mode, fontSize, duration, delay });
     const bulletchatting = document.createElement('bullet-chatting');
+    console.log('Created bullet-chatting element:', bulletchatting);
+
     bulletchatting.innerHTML = text;
     bulletchatting.mode = mode;
     if (duration) {
@@ -18,11 +36,14 @@ window.addbulletchatting = (text, mode, fontSize, duration, delay) => {
     if (fontSize) {
         bulletchatting.style.fontSize = fontSize + 'px';
     }
+
+    console.log('About to append bullet chat to list');
     list.appendChild(bulletchatting);
+    console.log('Bullet chat appended to list');
 }
 
 let index = 0;
-function nextFrame () {
+function nextFrame() {
     const nowTime = video.currentTime;
     while (bulletchattings[index] && bulletchattings[index].time <= nowTime) {
         window.addbulletchatting(bulletchattings[index].text, bulletchattings[index].mode);

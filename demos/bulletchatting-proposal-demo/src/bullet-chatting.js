@@ -13,7 +13,7 @@ class DemoCustomElements extends PolymerElement {
         });
     }
 
-    static get properties () {
+    static get properties() {
         return {
             bulletchattingplaystate: {
                 type: String,
@@ -36,7 +36,7 @@ class DemoCustomElements extends PolymerElement {
         };
     }
 
-    static get template () {
+    static get template() {
         return html`
             <style>
                 :host {
@@ -53,7 +53,7 @@ class DemoCustomElements extends PolymerElement {
         `;
     }
 
-    connectedCallback () {
+    connectedCallback() {
         super.connectedCallback();
 
         this._inheritProp('bulletchattingplaystate');
@@ -118,7 +118,7 @@ class DemoCustomElements extends PolymerElement {
             }
             index++;
         }
-        
+
         if (!disabled) {
             this.animation = this.animate(keyframes, {
                 duration: this.bulletchattingduration,
@@ -136,12 +136,12 @@ class DemoCustomElements extends PolymerElement {
                 this.dispatchEvent(new CustomEvent('bulletchattingcannel'));
                 this.remove();
             };
-    
+
             this.dispatchEvent(new CustomEvent('bulletchattingstart'));
         }
     }
-    
-    disconnectedCallback () {
+
+    disconnectedCallback() {
         super.disconnectedCallback();
         if (!this.finished) {
             if (this.animation) {
@@ -152,13 +152,13 @@ class DemoCustomElements extends PolymerElement {
         }
     }
 
-    _inheritProp (name) {
+    _inheritProp(name) {
         if (this[name] === undefined && this.parentElement[name] !== undefined) {
             this[name] = this.parentElement[name];
         }
     }
 
-    _check (top, index, mode) {
+    _check(top, index, mode) {
         const thisBoundingClientRect = this.getBoundingClientRect();
         if (top + thisBoundingClientRect.height > this.parentElement.getBoundingClientRect().height * this.parentElement.area / 100) {
             return false;
@@ -167,7 +167,7 @@ class DemoCustomElements extends PolymerElement {
         for (let i = 0; i < overlapBrothers.length; i++) {
             if (overlapBrothers[i].animation.currentTime !== overlapBrothers[i].bulletchattingduration) { // hack
                 const targetBoundingClientRect = overlapBrothers[i].getBoundingClientRect();
-    
+
                 if (mode === 'scroll') {
                     if (targetBoundingClientRect.top < (top + thisBoundingClientRect.bottom)
                         && targetBoundingClientRect.bottom > (top + thisBoundingClientRect.top)) { // pathway coincide

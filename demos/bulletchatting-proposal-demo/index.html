@@ -113,8 +113,10 @@
     </div>
     <h2>&lt;bullet-chatting&gt;</h2>
     <h3>Attributes:</h3>
-    <p>area: <input value="40" type="number" onchange="document.querySelector('bullet-chatting-list').area = this.value"></p>
-    <p>allowOverlap: <input type="checkbox" onchange="document.querySelector('bullet-chatting-list').allowOverlap = this.checked"></p>
+    <p>area: <input value="40" type="number"
+            onchange="document.querySelector('bullet-chatting-list').area = this.value"></p>
+    <p>allowOverlap: <input type="checkbox"
+            onchange="document.querySelector('bullet-chatting-list').allowOverlap = this.checked"></p>
     <h3>Add a bullet-chatting:</h3>
     <div class="controller">
         <div class="select">
@@ -184,7 +186,7 @@ document.querySelector('bullet-chatting-list').bulletchattingplaystate = 'paused
     <h3>Set allowOverlap:</h3>
     <pre>document.querySelector('bullet-chatting-list').allowOverlap = true;</pre>
 
-    <scirpt src="./dist/webcompoments-loader.js"></scirpt>
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.10/webcomponents-loader.js"></script>
     <script src="./dist/polymer-bulletchatting.js"></script>
     <script src="./index.js"></script>
     <script>
