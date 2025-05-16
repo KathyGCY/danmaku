@@ -113,7 +113,7 @@
         <!-- Ballet video -->
         <!-- <video controls src="./videos/Grand_Pas_Classique__Vladimi_Malakhov__Tatiana_Paliy.MP4"></video> -->
         <!-- A longer video -->
-        <video controls src="./videos/Don_Giovanni.mp4"></video>
+        <video controls src="./videos/short.mp4"></video>
         <bullet-chatting-list></bullet-chatting-list>
     </div>
     <h2>&lt;bullet-chatting&gt;</h2>
@@ -150,13 +150,8 @@
                 <label>bulletchattingdelay: </label>
                 <input class="bulletchatting-delay" type="number" value="0" onchange="generateCode()" /> ms
             </div>
-            <button onclick="window.addbulletchatting(
-                document.querySelector('.bulletchatting-text').value,
-                document.querySelector('.bulletchatting-mode').value,
-                document.querySelector('.bulletchatting-fontsize').value,
-                document.querySelector('.bulletchatting-duration').value,
-                document.querySelector('.bulletchatting-delay').value,
-                )">Send</button>
+            <!-- just an ID; index.js will add the listener -->
+            <button id="sendBtn">Send</button>
         </div>
         <div class="code">
             <pre></pre>
@@ -193,7 +188,7 @@ document.querySelector('bullet-chatting-list').bulletchattingplaystate = 'paused
 
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.10/webcomponents-loader.js"></script>
     <script src="./dist/polymer-bulletchatting.js"></script>
-    <script src="./index.js"></script>
+    <script src="./index.js"></script> <!-- see updated below -->
     <script>
         function generateCode() {
             document.querySelector('.code pre').innerHTML = `const bulletchatting = document.createElement('bullet-chatting');
