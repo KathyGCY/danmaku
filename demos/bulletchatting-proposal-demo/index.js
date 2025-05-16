@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const texts = [
         'This alpaca is so cute 😋',
-        'Perfect in workmanship 🥳',
-        'High-energy alarm 😱',
+        'What is alpaca doing in a desert?',
+        'Alpaca is a beautiful animal',
         "What's this alpaca's name?",
-        'Short legs',
-        'Is alpaca delicious?',
+        'Short legs OMG',
+        'This is a LOCAL desert for LOCAL alpaca',
         'The alpaca is eating grass',
         'LOOOOOL',
         'Has anyone noticed his eyes?',
