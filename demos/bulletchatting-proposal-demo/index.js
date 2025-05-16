@@ -2,11 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const list = document.querySelector('bullet-chatting-list');
     const video = document.querySelector('video');
 
-    list.bulletchattingplaystate = 'paused';
+    // initial config
+    list.bulletchattingplaystate = 'running';
     list.allowOverlap = true;
     list.area = 80;
     list.bulletchattingduration = 6000;
 
+    // add + auto-remove
     window.addbulletchatting = (text, mode = 'scroll', fontSize, duration, delay) => {
         const bullet = document.createElement('bullet-chatting');
         bullet.innerHTML = text;
@@ -15,16 +17,52 @@ document.addEventListener('DOMContentLoaded', () => {
         if (duration) bullet.bulletchattingduration = parseInt(duration, 10);
         if (delay) bullet.bulletchattingdelay = parseInt(delay, 10);
         list.appendChild(bullet);
+        bullet.addEventListener('bulletchattingend', () => bullet.remove());
     };
 
-    const inputs = document.querySelectorAll(
+    // seed texts
+    const texts = [
+        "Lorem ipsum dolor sit amet",
+        "Consectetur adipiscing elit",
+        "Sed do eiusmod tempor incididunt",
+        "Ut labore et dolore magna aliqua",
+        "Ut enim ad minim veniam",
+        "Quis nostrud exercitation ullamco",
+        "Laboris nisi ut aliquip ex ea commodo consequat"
+    ];
+
+    // random helper
+    const rand = (min, max) => Math.random() * (max - min) + min;
+
+    // spawn one random static bullet
+    function spawnRandomBullet() {
+        const text = texts[Math.floor(Math.random() * texts.length)];
+        const mode = ['scroll', 'top', 'bottom'][Math.floor(Math.random() * 3)];
+        const fontSize = rand(18, 30).toFixed(0);
+        const duration = rand(3000, 8000).toFixed(0);
+        addbulletchatting(text, mode, fontSize, duration, 0);
+    }
+
+    // schedule random spawns indefinitely
+    (function scheduleSpawn() {
+        spawnRandomBullet();
+        setTimeout(scheduleSpawn, rand(1000, 5000));
+    })();
+
+    // new toggle: if user checks #pauseOnTyping, typing will pause video
+    const pauseOnTypingCheckbox = document.getElementById('pauseOnTyping');
+
+    // pause while typing only if checkbox is checked
+    document.querySelectorAll(
         '.bulletchatting-text, .bulletchatting-mode, .bulletchatting-fontsize, .bulletchatting-duration, .bulletchatting-delay'
-    );
-    inputs.forEach(el => el.addEventListener('focus', () => {
-        video.pause();
-        list.bulletchattingplaystate = 'paused';
+    ).forEach(el => el.addEventListener('focus', () => {
+        if (!pauseOnTypingCheckbox || pauseOnTypingCheckbox.checked) {
+            video.pause();
+            list.bulletchattingplaystate = 'paused';
+        }
     }));
 
+    // send button
     document.getElementById('sendBtn').addEventListener('click', e => {
         e.preventDefault();
         const text = document.querySelector('.bulletchatting-text').value;
@@ -35,62 +73,5 @@ document.addEventListener('DOMContentLoaded', () => {
         addbulletchatting(text, mode, fontSize, duration, delay);
         video.play();
         list.bulletchattingplaystate = 'running';
-    });
-
-    const texts = [
-        'This alpaca is so cute 😋',
-        'What is alpaca doing in a desert?',
-        'Alpaca is a beautiful animal',
-        "What's this alpaca's name?",
-        'Short legs OMG',
-        'This is a LOCAL desert for LOCAL alpaca',
-        'The alpaca is eating grass',
-        'LOOOOOL',
-        'Has anyone noticed his eyes?',
-        'I love his smile',
-        'He find the treasure',
-        'Does alpaca like to eat berries? 🍇'
-    ];
-
-    const durationSec = 146;
-    const bulletchattings = [];
-    const TOTAL = 50;
-    for (let i = 0; i < TOTAL; i++) {
-        bulletchattings.push({
-            text: texts[Math.floor(Math.random() * texts.length)],
-            time: Math.random() * durationSec,
-            mode: ['scroll', 'top', 'bottom'][Math.floor(Math.random() * 3)]
-        });
-    }
-    bulletchattings.sort((a, b) => a.time - b.time);
-
-    bulletchattings.slice(0, 5).forEach(c =>
-        addbulletchatting(c.text, c.mode)
-    );
-
-    let index = 5;
-    function nextFrame() {
-        const now = video.currentTime;
-        while (bulletchattings[index] && bulletchattings[index].time <= now) {
-            addbulletchatting(bulletchattings[index].text, bulletchattings[index].mode);
-            index++;
-        }
-        if (!video.paused) requestAnimationFrame(nextFrame);
-    }
-
-    video.addEventListener('play', () => {
-        list.bulletchattingplaystate = 'running';
-        requestAnimationFrame(nextFrame);
-    });
-    video.addEventListener('pause', () => {
-        list.bulletchattingplaystate = 'paused';
-    });
-    video.addEventListener('seeking', () => {
-        list.innerHTML = '';
-        bulletchattings.slice(0, 5).forEach(c =>
-            addbulletchatting(c.text, c.mode)
-        );
-        index = bulletchattings.findIndex(c => c.time > video.currentTime);
-        if (index < 0) index = bulletchattings.length;
     });
 });
