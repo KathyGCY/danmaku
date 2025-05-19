@@ -125,6 +125,10 @@
                 <label>pause on typing:</label>
                 <input type="checkbox" id="pauseOnTyping" checked />
             </div>
+            <div class="line">
+                <label>enable bullets:</label>
+                <input type="checkbox" id="enableBullets" checked />
+            </div>
             <hr />
             <div class="line">
                 <label>text:</label>
@@ -152,12 +156,10 @@
                 <label>delay:</label>
                 <input type="number" class="bulletchatting-delay" value="0" /> ms
             </div>
-
             <div class="line">
                 <label>static alpha:</label>
                 <input type="range" id="staticAlpha" min="0" max="1" step="0.05" value="1" />
             </div>
-
             <div class="line">
                 <label>color:</label>
                 <div class="color-picker" id="colorPicker">
@@ -173,7 +175,6 @@
                     <div class="color-swatch" data-color="#000000" style="background:#000000;"></div>
                 </div>
             </div>
-
             <button id="sendBtn">Send</button>
         </div>
     </div>

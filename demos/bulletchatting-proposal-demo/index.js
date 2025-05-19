@@ -3,23 +3,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const video = document.querySelector('video');
     const textInput = document.querySelector('.bulletchatting-text');
     const charCount = document.getElementById('charCount');
-    const staticAlphaSlider = document.getElementById('staticAlpha');
+    const staticAlphaSl = document.getElementById('staticAlpha');
+    const enableBullets = document.getElementById('enableBullets');
     const MAX_CHARS = 55;
 
-    // Live character countdown
+    // live char countdown
     charCount.textContent = MAX_CHARS - textInput.value.length;
     textInput.addEventListener('input', () => {
         const rem = MAX_CHARS - textInput.value.length;
         charCount.textContent = rem >= 0 ? rem : 0;
     });
 
-    // Initial list config
+    // initial config
     list.bulletchattingplaystate = 'running';
     list.allowOverlap = true;
     list.area = 80;
     list.bulletchattingduration = 6000;
 
-    // Color picker setup
+    // color swatches
     const swatches = document.querySelectorAll('.color-swatch');
     let selectedColor = '#ffffff';
     swatches.forEach(s => {
@@ -30,19 +31,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Static alpha state
-    let staticAlpha = parseFloat(staticAlphaSlider.value);
-    staticAlphaSlider.addEventListener('input', () => {
-        staticAlpha = parseFloat(staticAlphaSlider.value);
-        document
-            .querySelectorAll('bullet-chatting[data-static]')
-            .forEach(b => b.style.opacity = staticAlpha);
+    // static alpha
+    let staticAlpha = parseFloat(staticAlphaSl.value);
+    staticAlphaSl.addEventListener('input', () => {
+        staticAlpha = parseFloat(staticAlphaSl.value);
+        document.querySelectorAll('bullet-chatting[data-static]').forEach(b => {
+            b.style.opacity = staticAlpha;
+        });
     });
 
-    // Add + auto-remove bullets, marking static with data-static
+    // spawn/add bullet
     window.addbulletchatting = (
         text, mode = 'scroll', fontSize, duration, delay, color = selectedColor, isStatic = false
     ) => {
+        if (!enableBullets.checked) return;
         const bullet = document.createElement('bullet-chatting');
         bullet.innerHTML = text;
         bullet.mode = mode;
@@ -58,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bullet.addEventListener('bulletchattingend', () => bullet.remove());
     };
 
-    // Random static spawns (1–5s), each with own color
+    // random static spawns
     const texts = [
         "Lorem ipsum dolor sit amet",
         "Consectetur adipiscing elit",
@@ -78,11 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
         addbulletchatting(txt, md, fz, dur, 0, col, true);
     }
     (function scheduleSpawn() {
-        spawnRandomBullet();
+        if (enableBullets.checked) spawnRandomBullet();
         setTimeout(scheduleSpawn, rand(1000, 5000));
     })();
 
-    // Pause on typing if enabled
+    // pause on typing
     const pauseOnTyping = document.getElementById('pauseOnTyping');
     document.querySelectorAll(
         '.bulletchatting-text, .bulletchatting-mode, .bulletchatting-fontsize, .bulletchatting-duration, .bulletchatting-delay'
@@ -95,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     );
 
-    // Send button: user bullets always full opacity
+    // send button
     document.getElementById('sendBtn').addEventListener('click', e => {
         e.preventDefault();
         const text = textInput.value;
