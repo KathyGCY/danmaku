@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fontSize: 35,
             duration: 4000,
             delay: 0,
-            color: '#0000ff',
+            color: '#00ffff',
             isStatic: true,
             shown: false
         },
@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fontSize: 35,
             duration: 4000,
             delay: 0,
-            color: '#0000ff',
+            color: '#00ffff',
             isStatic: true,
             shown: false
         },
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fontSize: 35,
             duration: 4000,
             delay: 0,
-            color: '#0000ff',
+            color: '#00ffff',
             isStatic: true,
             shown: false
         },
@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fontSize: 35,
             duration: 4000,
             delay: 0,
-            color: '#0000ff',
+            color: '#00ffff',
             isStatic: true,
             shown: false
         },
