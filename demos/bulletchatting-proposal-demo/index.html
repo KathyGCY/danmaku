@@ -35,8 +35,7 @@
         }
 
         bullet-chatting {
-            text-shadow:
-                1px 0 1px #000,
+            text-shadow: 1px 0 1px #000,
                 0 1px 1px #000,
                 0 -1px 1px #000,
                 -1px 0 1px #000;
@@ -49,29 +48,33 @@
             gap: 2rem;
         }
 
-        .controller .select {
+        .select {
             flex: 1;
         }
 
-        .controller .select .line {
+        .line {
             margin-bottom: 10px;
         }
 
-        .controller label {
+        label {
             display: inline-block;
             width: 120px;
         }
 
-        .controller input[type="number"],
-        .controller select,
-        .controller input[type="text"] {
+        input[type="number"],
+        select,
+        input[type="text"] {
             width: 150px;
         }
 
-        .controller button {
+        #charCount {
+            margin-left: 8px;
+            font-weight: bold;
+        }
+
+        button {
             margin-top: 10px;
             padding: 6px 12px;
-            font-size: 14px;
         }
     </style>
 </head>
@@ -104,7 +107,8 @@
             <hr />
             <div class="line">
                 <label>text:</label>
-                <input type="text" class="bulletchatting-text" value="Your comment here" />
+                <input type="text" class="bulletchatting-text" value="Your comment here" maxlength="55" />
+                <span id="charCount">55</span> chars left
             </div>
             <div class="line">
                 <label>font size:</label>

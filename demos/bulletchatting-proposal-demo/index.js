@@ -1,14 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
     const list = document.querySelector('bullet-chatting-list');
     const video = document.querySelector('video');
+    const textInput = document.querySelector('.bulletchatting-text');
+    const charCount = document.getElementById('charCount');
+    const MAX_CHARS = 55;
 
-    // initial config
+    // 1) Character-count setup
+    charCount.textContent = MAX_CHARS - textInput.value.length;
+    textInput.addEventListener('input', () => {
+        const remaining = MAX_CHARS - textInput.value.length;
+        charCount.textContent = remaining >= 0 ? remaining : 0;
+    });
+
+    // 2) initial config
     list.bulletchattingplaystate = 'running';
     list.allowOverlap = true;
     list.area = 80;
     list.bulletchattingduration = 6000;
 
-    // add + auto-remove
+    // 3) add + auto-remove bullets
     window.addbulletchatting = (text, mode = 'scroll', fontSize, duration, delay) => {
         const bullet = document.createElement('bullet-chatting');
         bullet.innerHTML = text;
@@ -20,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bullet.addEventListener('bulletchattingend', () => bullet.remove());
     };
 
-    // seed texts
+    // 4) seed texts + random helper
     const texts = [
         "Lorem ipsum dolor sit amet",
         "Consectetur adipiscing elit",
@@ -30,11 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
         "Quis nostrud exercitation ullamco",
         "Laboris nisi ut aliquip ex ea commodo consequat"
     ];
-
-    // random helper
     const rand = (min, max) => Math.random() * (max - min) + min;
 
-    // spawn one random static bullet
+    // 5) spawn one random static bullet
     function spawnRandomBullet() {
         const text = texts[Math.floor(Math.random() * texts.length)];
         const mode = ['scroll', 'top', 'bottom'][Math.floor(Math.random() * 3)];
@@ -43,29 +51,29 @@ document.addEventListener('DOMContentLoaded', () => {
         addbulletchatting(text, mode, fontSize, duration, 0);
     }
 
-    // schedule random spawns indefinitely
+    // 6) schedule random spawns indefinitely (every 1–5s)
     (function scheduleSpawn() {
         spawnRandomBullet();
         setTimeout(scheduleSpawn, rand(1000, 5000));
     })();
 
-    // new toggle: if user checks #pauseOnTyping, typing will pause video
-    const pauseOnTypingCheckbox = document.getElementById('pauseOnTyping');
-
-    // pause while typing only if checkbox is checked
+    // 7) pause on typing if enabled
+    const pauseOnTyping = document.getElementById('pauseOnTyping');
     document.querySelectorAll(
         '.bulletchatting-text, .bulletchatting-mode, .bulletchatting-fontsize, .bulletchatting-duration, .bulletchatting-delay'
-    ).forEach(el => el.addEventListener('focus', () => {
-        if (!pauseOnTypingCheckbox || pauseOnTypingCheckbox.checked) {
-            video.pause();
-            list.bulletchattingplaystate = 'paused';
-        }
-    }));
+    ).forEach(el =>
+        el.addEventListener('focus', () => {
+            if (!pauseOnTyping || pauseOnTyping.checked) {
+                video.pause();
+                list.bulletchattingplaystate = 'paused';
+            }
+        })
+    );
 
-    // send button
+    // 8) Send button: add user bullet then resume
     document.getElementById('sendBtn').addEventListener('click', e => {
         e.preventDefault();
-        const text = document.querySelector('.bulletchatting-text').value;
+        const text = textInput.value;
         const mode = document.querySelector('.bulletchatting-mode').value;
         const fontSize = document.querySelector('.bulletchatting-fontsize').value;
         const duration = document.querySelector('.bulletchatting-duration').value;
