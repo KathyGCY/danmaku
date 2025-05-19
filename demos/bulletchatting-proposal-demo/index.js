@@ -10,20 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // BANNED WORD LIST (case‐insensitive)
     const bannedWords = ['geronimo'];
 
-    // live char countdown
+    // CHAR COUNTDOWN
     charCount.textContent = MAX_CHARS - textInput.value.length;
     textInput.addEventListener('input', () => {
         const rem = MAX_CHARS - textInput.value.length;
         charCount.textContent = rem >= 0 ? rem : 0;
     });
 
-    // initial config
+    // INITIAL CONFIG
     list.bulletchattingplaystate = 'running';
-    list.allowOverlap = true;
+    list.allowOverlap = false;
     list.area = 80;
     list.bulletchattingduration = 6000;
 
-    // color swatches
+    // COLOR SWATCHES
     const swatches = document.querySelectorAll('.color-swatch');
     let selectedColor = '#ffffff';
     swatches.forEach(s => {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // static alpha
+    // STATIC ALPHA
     let staticAlpha = parseFloat(staticAlphaSl.value);
     staticAlphaSl.addEventListener('input', () => {
         staticAlpha = parseFloat(staticAlphaSl.value);
@@ -43,11 +43,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // spawn/add bullet
+    // ADD BULLET FUNCTION
+    // isStatic=true for static scheduled bullets, false for user-sent
     window.addbulletchatting = (
-        text, mode = 'scroll', fontSize, duration, delay, color = selectedColor, isStatic = false
+        text,
+        mode = 'scroll',
+        fontSize,
+        duration,
+        delay,
+        color = selectedColor,
+        isStatic = false
     ) => {
-        if (!enableBullets.checked) return;
+        // only block static bullets if disabled
+        if (isStatic && !enableBullets.checked) return;
+
         const bullet = document.createElement('bullet-chatting');
         bullet.innerHTML = text;
         bullet.mode = mode;
@@ -63,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bullet.addEventListener('bulletchattingend', () => bullet.remove());
     };
 
-    // random static spawns
+    // RANDOM STATIC SPAWNS
     const texts = [
         "Lorem ipsum dolor sit amet",
         "Consectetur adipiscing elit",
@@ -74,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "Laboris nisi ut aliquip ex ea commodo consequat"
     ];
     const rand = (min, max) => Math.random() * (max - min) + min;
+
     function spawnRandomBullet() {
         const txt = texts[Math.floor(Math.random() * texts.length)];
         const md = ['scroll', 'top', 'bottom'][Math.floor(Math.random() * 3)];
@@ -83,11 +93,429 @@ document.addEventListener('DOMContentLoaded', () => {
         addbulletchatting(txt, md, fz, dur, 0, col, true);
     }
     (function scheduleSpawn() {
-        if (enableBullets.checked) spawnRandomBullet();
+        spawnRandomBullet();
         setTimeout(scheduleSpawn, rand(1000, 5000));
     })();
 
-    // pause on typing
+    // CUSTOM SCHEDULED CHATS
+    const customChats = [
+        {
+            time: 6 * 60 + 10,          // 6m10s
+            text: 'High Energy Ahead!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 8,           // 8m05s
+            text: '前方高能!!!!!',
+            mode: 'top',
+            fontSize: 30,
+            duration: 5000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 6,           // 8m05s
+            text: 'EPICCCC section Ahead!!!!!',
+            mode: 'scroll',
+            fontSize: 30,
+            duration: 5000,
+            delay: 0,
+            color: '#00ff00',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 9,           // 8m05s
+            text: 'Most Epic Moments Ahead!!!!!',
+            mode: 'top',
+            fontSize: 30,
+            duration: 5000,
+            delay: 0,
+            color: '#00ff00',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 11,          // 6m10s
+            text: '前方高能!',
+            mode: 'top',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 12,          // 6m10s
+            text: '前方高能!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ffff00',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 12,          // 6m10s
+            text: '前方高能!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ffff00',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 12,          // 6m10s
+            text: '前方高能!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ffff00',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 12,          // 6m10s
+            text: '前方高能!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 12,          // 6m10s
+            text: '前方高能!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 12,          // 6m10s
+            text: '前方高能!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 13,          // 6m10s
+            text: 'EPICCCCCCCC!!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 14,          // 6m10s
+            text: 'String section going crazy!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 14,          // 6m10s
+            text: 'WOW epic sting section!!!',
+            mode: 'top',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 15,          // 6m10s
+            text: 'I can literally see the sword fight!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 15,          // 6m10s
+            text: 'I can literally see the sword fight!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 15,          // 6m10s
+            text: 'Team Capulet show me your hands!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 17,          // 6m10s
+            text: 'Team Montague show me your hands!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#0000ff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 18,          // 6m10s
+            text: 'Team Montague!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#0000ff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 18,          // 6m10s
+            text: 'Team Montague All the WAYYY!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#0000ff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 19,          // 6m10s
+            text: 'Team Montague!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#0000ff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 20,          // 6m10s
+            text: 'Team Capulet!!!',
+            mode: 'top',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 21,          // 6m10s
+            text: 'Team Capulet here!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 20,          // 6m10s
+            text: 'Team Capulet Forever!!!',
+            mode: 'top',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 24,          // 6m10s
+            text: 'Am I the only one who love Mercutio?',
+            mode: 'scroll',
+            fontSize: 40,
+            duration: 4000,
+            delay: 0,
+            color: '#ff00ff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 26,          // 6m10s
+            text: 'OMG Team Mercutio here!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff00ff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 26,          // 6m10s
+            text: 'Me too Mercutio!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff00ff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 27,          // 6m10s
+            text: 'I love Mercutio!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff00ff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 28,          // 6m10s
+            text: 'Mercutio is mine!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff00ff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 25,          // 6m10s
+            text: 'Laurence is lovely!',
+            mode: 'scroll',
+            fontSize: 30,
+            duration: 4000,
+            delay: 0,
+            color: '#ffffff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 27,          // 6m10s
+            text: 'Laurence? SRSLY???',
+            mode: 'scroll',
+            fontSize: 30,
+            duration: 4000,
+            delay: 0,
+            color: '#ffffff',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 15,          // 6m10s
+            text: 'Lol string players doing cardio rn!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 19,          // 6m10s
+            text: 'Team Cymbal For the Win',
+            mode: 'top',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 20,          // 6m10s
+            text: 'Dream moments for any precussionist',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 21,          // 6m10s
+            text: 'Team Precussion FOREVER!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        {
+            time: 6 * 60 + 22,          // 6m10s
+            text: 'Go Precussion go go GO go!!!',
+            mode: 'scroll',
+            fontSize: 35,
+            duration: 4000,
+            delay: 0,
+            color: '#ff0000',
+            isStatic: true,
+            shown: false
+        },
+        // …add as many as you like…
+    ];
+    video.addEventListener('timeupdate', () => {
+        const now = video.currentTime;
+        customChats.forEach(chat => {
+            if (!chat.shown && now >= chat.time) {
+                addbulletchatting(
+                    chat.text,
+                    chat.mode,
+                    chat.fontSize,
+                    chat.duration,
+                    chat.delay,
+                    chat.color,
+                    chat.isStatic
+                );
+                chat.shown = true;
+            }
+        });
+    });
+
+    // PAUSE ON TYPING
     const pauseOnTyping = document.getElementById('pauseOnTyping');
     document.querySelectorAll(
         '.bulletchatting-text, .bulletchatting-mode, .bulletchatting-fontsize, .bulletchatting-duration, .bulletchatting-delay'
@@ -100,14 +528,13 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     );
 
-    // send button with banned-word check
+    // SEND BUTTON WITH BANNED-WORD CHECK
     document.getElementById('sendBtn').addEventListener('click', e => {
         e.preventDefault();
         const text = textInput.value.trim();
         const lower = text.toLowerCase();
-        // check for any banned word
-        if (bannedWords.some(w => lower.includes(w.toLowerCase()))) {
-            alert('Please adjust your bullet chat message.');
+        if (bannedWords.some(w => lower.includes(w))) {
+            alert('Please adjust your bullet chat — that word is not allowed.');
             return;
         }
         const mode = document.querySelector('.bulletchatting-mode').value;
