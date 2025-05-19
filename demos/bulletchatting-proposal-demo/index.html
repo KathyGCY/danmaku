@@ -35,7 +35,8 @@
         }
 
         bullet-chatting {
-            text-shadow: 1px 0 1px #000,
+            text-shadow:
+                1px 0 1px #000,
                 0 1px 1px #000,
                 0 -1px 1px #000,
                 -1px 0 1px #000;
@@ -72,9 +73,30 @@
             font-weight: bold;
         }
 
+        /* — color picker grid — */
+        .color-picker {
+            display: grid;
+            grid-template-columns: repeat(5, 24px);
+            grid-gap: 4px;
+            margin-left: 120px;
+            margin-top: 4px;
+        }
+
+        .color-swatch {
+            width: 24px;
+            height: 24px;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .color-swatch.selected {
+            border-color: #fff;
+        }
+
         button {
             margin-top: 10px;
             padding: 6px 12px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -131,6 +153,24 @@
                 <label>delay:</label>
                 <input type="number" class="bulletchatting-delay" value="0" /> ms
             </div>
+
+            <!-- NEW: Color picker swatches -->
+            <div class="line">
+                <label>color:</label>
+                <div class="color-picker" id="colorPicker">
+                    <div class="color-swatch selected" data-color="#ffffff" style="background:#ffffff;"></div>
+                    <div class="color-swatch" data-color="#ff0000" style="background:#ff0000;"></div>
+                    <div class="color-swatch" data-color="#00ff00" style="background:#00ff00;"></div>
+                    <div class="color-swatch" data-color="#0000ff" style="background:#0000ff;"></div>
+                    <div class="color-swatch" data-color="#ffff00" style="background:#ffff00;"></div>
+                    <div class="color-swatch" data-color="#ff9900" style="background:#ff9900;"></div>
+                    <div class="color-swatch" data-color="#9900ff" style="background:#9900ff;"></div>
+                    <div class="color-swatch" data-color="#00ffff" style="background:#00ffff;"></div>
+                    <div class="color-swatch" data-color="#ff00ff" style="background:#ff00ff;"></div>
+                    <div class="color-swatch" data-color="#000000" style="background:#000000;"></div>
+                </div>
+            </div>
+
             <button id="sendBtn">Send</button>
         </div>
     </div>
