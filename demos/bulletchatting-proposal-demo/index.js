@@ -375,6 +375,17 @@ document.addEventListener('DOMContentLoaded', () => {
             shown: false
         },
         {
+            time: 6 * 60 + 23,          // 6m10s
+            text: 'This is a LOCAL house for LOCAL people',
+            mode: 'scroll',
+            fontSize: 30,
+            duration: 4000,
+            delay: 0,
+            color: '#ffffff',
+            isStatic: true,
+            shown: false
+        },
+        {
             time: 6 * 60 + 26,          // 6m10s
             text: 'OMG Team Mercutio here!!!',
             mode: 'scroll',
@@ -408,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
             shown: false
         },
         {
-            time: 6 * 60 + 28,          // 6m10s
+            time: 6 * 60 + 27,          // 6m10s
             text: 'Mercutio is mine!',
             mode: 'scroll',
             fontSize: 35,
@@ -430,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
             shown: false
         },
         {
-            time: 6 * 60 + 27,          // 6m10s
+            time: 6 * 60 + 28,          // 6m10s
             text: 'Laurence? SRSLY???',
             mode: 'scroll',
             fontSize: 30,
