@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             time: 6 * 60 + 11,          // 6m10s
-            text: '前方高能!',
+            text: 'The Strife Theme!',
             mode: 'top',
             fontSize: 35,
             duration: 4000,
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             time: 6 * 60 + 12,          // 6m10s
-            text: '前方高能!',
+            text: 'The Strife Theme!',
             mode: 'scroll',
             fontSize: 35,
             duration: 4000,
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             time: 6 * 60 + 12,          // 6m10s
-            text: '前方高能!',
+            text: 'The Strife Theme!',
             mode: 'scroll',
             fontSize: 35,
             duration: 4000,
@@ -277,8 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
             shown: false
         },
         {
-            time: 6 * 60 + 15,          // 6m10s
-            text: 'I can literally see the sword fight!!!',
+            time: 6 * 60 + 29,          // 6m10s
+            text: 'Tchai is brilliant to use Cymbal to depict a sword fight!!!',
             mode: 'scroll',
             fontSize: 35,
             duration: 4000,
@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             time: 6 * 60 + 23,          // 6m10s
-            text: 'This is a LOCAL house for LOCAL people',
+            text: 'The Strife Theme! I love it!',
             mode: 'scroll',
             fontSize: 30,
             duration: 4000,
