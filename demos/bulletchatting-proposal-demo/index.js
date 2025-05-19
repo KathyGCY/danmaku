@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const enableBullets = document.getElementById('enableBullets');
     const MAX_CHARS = 55;
 
+    // BANNED WORD LIST (case‐insensitive)
+    const bannedWords = ['geronimo'];
+
     // live char countdown
     charCount.textContent = MAX_CHARS - textInput.value.length;
     textInput.addEventListener('input', () => {
@@ -97,10 +100,16 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     );
 
-    // send button
+    // send button with banned-word check
     document.getElementById('sendBtn').addEventListener('click', e => {
         e.preventDefault();
-        const text = textInput.value;
+        const text = textInput.value.trim();
+        const lower = text.toLowerCase();
+        // check for any banned word
+        if (bannedWords.some(w => lower.includes(w.toLowerCase()))) {
+            alert('Please adjust your bullet chat message.');
+            return;
+        }
         const mode = document.querySelector('.bulletchatting-mode').value;
         const fontSize = document.querySelector('.bulletchatting-fontsize').value;
         const duration = document.querySelector('.bulletchatting-duration').value;
